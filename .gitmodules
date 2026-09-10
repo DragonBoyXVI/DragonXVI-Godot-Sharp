@@ -1,0 +1,3 @@
+[submodule "DragonXVI-Sharp"]
+	path = DragonXVI-Sharp
+	url = https://github.com/DragonBoyXVI/DragonXVI-Sharp.git
