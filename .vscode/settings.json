@@ -1,1 +1,6 @@
-{}
+{
+    "dotrush.roslyn.projectOrSolutionFiles": [
+        "/home/misty/Documents/Projects/CSharp/DragonXVISharpGodot/DragonXVI-Sharp/DragonXVI.csproj",
+        "/home/misty/Documents/Projects/CSharp/DragonXVISharpGodot/DragonXVISharpGodot.csproj"
+    ]
+}
