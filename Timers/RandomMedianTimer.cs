@@ -1,6 +1,6 @@
 using Godot;
 
-namespace DragonXVI.GodotTemplate.Timers;
+namespace DragonXVI.XVIGodot.Timers;
 
 /// <summary>
 /// Uses the randfn function to pick random times along a standard deviation.
