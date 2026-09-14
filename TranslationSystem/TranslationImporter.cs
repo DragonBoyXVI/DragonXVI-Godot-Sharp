@@ -1,4 +1,3 @@
-using System.Reflection.Emit;
 using System.Text.Json;
 using Godot;
 
@@ -25,7 +24,7 @@ public static class TranslationImporter
     /// Returns a value form the extra data cache.
     /// </summary>
     /// <param name="dataKey">String key for the data you want.</param>
-    /// <param name="locale">Optonal locale. By default it uses the current one from the TranslationServer.</param>
+    /// <param name="locale">Optonal locale. By default it uses the current one from the <see cref="TranslationServer"/>.</param>
     /// <returns></returns>
     public static Variant? GetExtraData( string dataKey, string? locale = null )
     {
@@ -90,7 +89,7 @@ public static class TranslationImporter
     /// This can return null, if it does the reason why will be in Godots terminal.
     /// </summary>
     /// <param name="filePath">Path to the file you want parsed.</param>
-    /// <returns><see cref="Dictionary"/> of string keys and [<see cref="Variant"/>] values.</returns>
+    /// <returns><see cref="Dictionary"/> (Csharp) of string keys and [<see cref="Variant"/>] values.</returns>
     public static Dictionary<string, Variant>? ParseFileForDict( string filePath )
     {
         if ( !Godot.FileAccess.FileExists( filePath ) )
@@ -118,5 +117,48 @@ public static class TranslationImporter
         }
         
         return parsedDict;
+    }
+
+    /// <summary>
+    /// Parses a folder and all its subfolders (if searchSubdirs is true) for translation json files.
+    /// Also adds them to the translation server.
+    /// </summary>
+    /// <param name="dirPath"></param>
+    /// <param name="searchSubdirs"></param>
+    public static void ParseDirForFiles( string dirPath, bool searchSubdirs = true )
+    {
+        if ( DirAccess.DirExistsAbsolute( dirPath ) )
+        {
+            GD.PushError( $"Trying to parse a dir that doesnt exist! {dirPath}" );
+            return;
+        }
+        
+        DirAccess? dir = DirAccess.Open( dirPath );
+        if ( dir is null )
+        {
+            GD.PushError($"Failded to open folder: {dirPath}, Error: {DirAccess.GetOpenError()}");
+            return;
+        }
+        
+        _ = dir.ListDirBegin();
+        string fileName = dir.GetNext();
+        while ( fileName != "" )
+        {
+            if ( dir.CurrentIsDir() && searchSubdirs ) {
+                ParseDirForFiles( dir.GetCurrentDir() + "/" + fileName );
+            }
+            else
+            {
+                var dict = ParseFileForDict( dir.GetCurrentDir() + "/" + fileName );
+                if ( dict is null )
+                {
+                    continue;
+                }
+                var translation = ParseDictToTranslation( dict, out var _ );
+                TranslationServer.AddTranslation( translation );
+            }
+            
+            fileName = dir.GetNext();
+        }
     }
 }
