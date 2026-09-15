@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Collections.Generic;
 using Godot;
 
 namespace DragonXVI.XVIGodot.TranslationSystem;
