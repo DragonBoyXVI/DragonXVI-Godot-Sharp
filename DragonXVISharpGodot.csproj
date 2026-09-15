@@ -7,7 +7,7 @@
     <RootNamespace>DragonXVI.XVIGodot</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-    <NoWarn>8019</NoWarn>
+    <NoWarn>CS8019,IDE0005</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
