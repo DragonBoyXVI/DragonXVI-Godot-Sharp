@@ -1,5 +1,0 @@
-"Microsoft.NET.Sdk"
-
-  <ItemGroup>
-    <PackageReference Include="GodotSharp" Version="4.7.2" />
-  </ItemGroup>
